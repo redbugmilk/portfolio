@@ -1,17 +1,18 @@
 import React from "react";
-import Table from "./components/Table";
+import Passenger from "./components/Passenger/Passenger";
+import Table from "./components/UI/Table";
 
-const content = [
-  { id: 0, title: "A", director: "as", producer: "ba" },
-  { id: 1, title: "B", director: "bs", producer: "bb" },
-  { id: 2, title: "C", director: "cs", producer: "bc" },
-  { id: 3, title: "C", director: "ds", producer: "bd" },
-];
+// const content = [
+//   { id: 0, name: "A", trips: "as", airline: "ba" },
+//   { id: 1, name: "B", trips: "bs", airline: "bb" },
+//   { id: 2, name: "C", trips: "cs", airline: "bc" },
+//   { id: 3, name: "C", trips: "ds", airline: "bd" },
+// ];
 
 function App() {
   return (
     <React.Fragment>
-      <Table tableContent={content} />
+      <Passenger />
     </React.Fragment>
   );
 }
