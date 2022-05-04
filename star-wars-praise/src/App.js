@@ -1,23 +1,18 @@
-import "./App.css";
+import React from "react";
+import Table from "./components/Table";
+
+const content = [
+  { id: 0, title: "A", director: "as", producer: "ba" },
+  { id: 1, title: "B", director: "bs", producer: "bb" },
+  { id: 2, title: "C", director: "cs", producer: "bc" },
+  { id: 3, title: "C", director: "ds", producer: "bd" },
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Table tableContent={content} />
+    </React.Fragment>
   );
 }
 
