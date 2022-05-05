@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import Button from "@mui/material/Button";
+import React, { useCallback, useEffect, useState } from "react";
 import useRequest from "../hooks/use-request";
 import Table from "../UI/Table";
 const BASE_URL = "https://api.instantwebtools.net/v1/passenger";
@@ -14,27 +15,41 @@ function Passenger() {
   const [numberPerPage, setNumberPerPage] = useState(20);
   const [totalNumberPage, setTotalNumberPage] = useState(0);
   const [page, setPage] = useState(0);
+  //const [refresh, setRefresh] = useState(false);
 
   const { isLoading, error, sendRequest: getPassengerData } = useRequest();
-  const url = `${BASE_URL}?page=${page}&size=${numberPerPage}`;
 
-  useEffect(() => {
-    const mapPassengerData = (response) => {
-      const passengers = response.data;
+  const deleteHandler = useCallback((id) => {
+    const url = `${BASE_URL}/${id}`;
+    //deletePassengerData({ url, method:"DELETE" });
+    console.log(url);
+  }, []);
 
-      if (passengers.length > 0 && response.totalPages) {
-        const passengerDataMapped = passengers.map((value) => ({
+  const mapPassengerData = useCallback(
+    (apiResponse) => {
+      if (apiResponse.data.length > 0) {
+        const response = apiResponse.data.map((value) => ({
           id: value._id,
           name: value.name,
           trips: value.trips,
           airline: value.airline[0].name,
+          delete: (
+            <Button onClick={(id) => deleteHandler(value._id)}>Delete</Button>
+          ),
         }));
-        setPassengers(passengerDataMapped);
-        setTotalNumberPage(response.totalPages);
+        setPassengers(response);
       }
-    };
+      if (apiResponse.totalPages) {
+        setTotalNumberPage(apiResponse.totalPages);
+      }
+    },
+    [deleteHandler]
+  );
+
+  useEffect(() => {
+    const url = `${BASE_URL}?page=${page}&size=${numberPerPage}`;
     getPassengerData({ url }, mapPassengerData);
-  }, [getPassengerData, url]);
+  }, [getPassengerData, page, numberPerPage, mapPassengerData]);
 
   return (
     <React.Fragment>
