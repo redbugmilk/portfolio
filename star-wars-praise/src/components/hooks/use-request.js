@@ -15,17 +15,24 @@ const useRequest = () => {
         data: requestConfig.body ? requestConfig.body : {},
       });
       console.log(response.data);
+
       applyData(response.data);
     } catch (error) {
       setError(error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, []);
+
+  const cleanError = () => {
+    setError();
+  };
 
   return {
     isLoading,
     error,
     sendRequest,
+    cleanError,
   };
 };
 
