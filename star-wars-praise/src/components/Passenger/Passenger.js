@@ -18,44 +18,55 @@ function Passenger() {
   //const [refresh, setRefresh] = useState(false);
 
   const { isLoading, error, sendRequest: getPassengerData } = useRequest();
+  const {
+    isLoading: isDeleting,
+    error: deletingError,
+    sendRequest: deletePassengerData,
+    cleanError: cleanDeleteError,
+  } = useRequest();
 
-  const deleteHandler = useCallback((id) => {
-    const url = `${BASE_URL}/${id}`;
-    //deletePassengerData({ url, method:"DELETE" });
-    console.log(url);
+  const deleteHandler = useCallback(async (id) => {
+    const url = `${BASE_URL}/${id + 1}`;
+    await deletePassengerData({ url, method: "DELETE" });
+    fetchPassengerHandler();
   }, []);
 
-  const mapPassengerData = useCallback(
-    (apiResponse) => {
-      if (apiResponse.data.length > 0) {
-        const response = apiResponse.data.map((value) => ({
-          id: value._id,
-          name: value.name,
-          trips: value.trips,
-          airline: value.airline[0].name,
-          delete: (
-            <Button onClick={(id) => deleteHandler(value._id)}>Delete</Button>
-          ),
-        }));
-        setPassengers(response);
-      }
-      if (apiResponse.totalPages) {
-        setTotalNumberPage(apiResponse.totalPages);
-      }
-    },
-    [deleteHandler]
-  );
+  const transformPassengerData = (data) =>
+    data.map((value) => ({
+      id: value._id,
+      name: value.name,
+      trips: value.trips,
+      airline: value.airline[0].name,
+      delete: (
+        <Button onClick={(id) => deleteHandler(value._id)}>Delete</Button>
+      ),
+    }));
 
-  useEffect(() => {
+  const mapPassengerData = useCallback((apiResponse) => {
+    if (apiResponse.data.length > 0) {
+      setPassengers(apiResponse.data);
+    }
+    if (apiResponse.totalPages) {
+      setTotalNumberPage(apiResponse.totalPages);
+    }
+  }, []);
+
+  const fetchPassengerHandler = useCallback(() => {
     const url = `${BASE_URL}?page=${page}&size=${numberPerPage}`;
     getPassengerData({ url }, mapPassengerData);
-  }, [getPassengerData, page, numberPerPage, mapPassengerData]);
+  }, [getPassengerData, mapPassengerData, page, numberPerPage]);
+
+  useEffect(() => {
+    fetchPassengerHandler();
+  }, [fetchPassengerHandler]);
 
   return (
     <React.Fragment>
+      {isDeleting && <p>Deleting user</p>}
+      {deletingError && <p>{deletingError}</p>}
       {!isLoading && error && <p>Something went wrong</p>}
       {!isLoading && passengers.length > 0 && (
-        <Table tableContent={passengers} />
+        <Table tableContent={transformPassengerData(passengers)} />
       )}
       {!isLoading && !error && passengers.length === 0 && <p>No passenger</p>}
       {isLoading && <p>Loading passenger information...</p>}
