@@ -14,8 +14,6 @@ const useRequest = () => {
         url: requestConfig.url,
         data: requestConfig.body ? requestConfig.body : {},
       });
-      console.log(response.data);
-
       applyData(response.data);
     } catch (error) {
       setError(error.message);
