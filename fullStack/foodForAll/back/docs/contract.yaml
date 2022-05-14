@@ -8,7 +8,7 @@ info:
     name: Joana Correia
     url: https://github.com/redbugmilk
     email: crazy@girl.madness
-host: localhost:3000
+host: localhost:6000
 basePath: "/"
 schemes: ["http"]
 paths:
