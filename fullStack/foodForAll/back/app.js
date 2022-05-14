@@ -6,7 +6,7 @@ var swaggerJsdoc = require("swagger-jsdoc");
 var swaggerUi = require("swagger-ui-express");
 
 const YAML = require("yamljs");
-const swaggerDocument = YAML.load("./docs/openApi.yaml");
+const swaggerDocument = YAML.load("./docs/contract.yaml");
 
 var devicesRouter = require("./src/routes/devices");
 

@@ -1,0 +1,172 @@
+openapi: "3.0.0"
+info:
+  title: Device API
+  version: 0.1.0
+  description:
+    This is a simple CRUD API application made in express for devices
+  contact:
+    name: Joana Correia
+    url: https://github.com/redbugmilk
+    email: crazy@girl.madness
+host: localhost:3000
+basePath: "/"
+schemes: ["http"]
+paths:
+  /devices:
+    get:
+      description: Get all devices
+      responses:
+        '200':
+          description: Device created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseListDevices'
+    post:
+      description: Add a new device
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestDevicesRequire'
+      responses:
+        '200':
+          description: Device created
+  /devices/{id}:
+    get:
+      description: Get a specific device by its id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeviceId'
+      responses:
+        '200':
+          description: Device created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseDevices'
+        '404':
+          description: Device with the specified ID was not found.
+    put:
+      description: Update total information of a specific device
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeviceId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestDevicesRequire'
+      responses:
+        '204':
+          description: Device update
+        '404':
+          description: Device with the specified ID was not found.
+    patch:
+      description: Update partial information from a specific device
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeviceId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestDevices'
+      responses:
+        '204':
+          description: Device update
+        '404':
+          description: Device with the specified ID was not found.
+    delete:
+      description: Delete  a specific device by its id
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DeviceId'
+      responses:
+        '204':
+          description: Device delete
+        '404':
+          description: Device with the specified ID was not found.
+  /devices/?brand={brand}:
+    get:
+      description: Get all devices for a given brand
+      parameters:
+        - name: brand
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Brand name
+      responses:
+        '200':
+          description: Device created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseListDevices'
+components:
+  schemas:
+    DeviceId:
+      type: string
+      description: Device unique id
+      example:
+        id: 8f3c7f48-b033-4f53-9e2d-83c217ce5915
+    ResponseDevices:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Auto-generate unique id that identifies the device
+        name:
+          type: string
+          description: Device's name
+          example: Special one
+        brand:
+          type: string
+          description: Device's brand
+          example: iphone Galaxy 1
+        createdAt:
+             type: string
+             format: date
+             description: The date of the device record creation
+    RequestDevices:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Device's name
+          example: Special one
+        brand:
+          type: string
+          description: Device's brand
+          example: iphone Galaxy 1
+    RequestDevicesRequire:
+      type: object
+      required:
+        - name
+        - brand
+      properties:
+        name:
+          type: string
+          description: Device's name
+          example: Special one
+        brand:
+          type: string
+          description: Device's brand
+          example: iphone Galaxy 1
+    ResponseListDevices:
+      type: array
+      items:
+        $ref: '#/components/schemas/ResponseDevices'
