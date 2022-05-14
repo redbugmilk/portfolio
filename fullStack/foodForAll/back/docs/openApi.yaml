@@ -1,0 +1,20 @@
+swagger: "2.0"
+info:
+  title: "Device API"
+  version: "0.1.0"
+  description:
+    "This is a simple CRUD API application made in express for decices"
+  license:
+    name: "MIT"
+    url: "https://spdx.org/licenses/MIT.html"
+    contact:
+      name: "Joana Correia"
+      url: "https://github.com/redbugmilk"
+      email: "crazy@girl.madness"
+host: localhost:3000
+basePath: "/"
+schemes: ["http"]
+paths:
+  /devices:
+    get:
+      description: "Get all devices"
