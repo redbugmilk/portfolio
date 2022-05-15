@@ -7,15 +7,26 @@ const postDevice = async (req, res, next) => {
     const { name, brand } = req.body;
     const newDevice = new Device(name, brand);
     await devicesService.setDevice(newDevice.getDevice());
-  } catch (error) {}
-  res.send("post device");
+    res.status(200).send("post device");
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send();
+  }
 };
 
-const getDevice = (req, res, next) => {
+const getDevice = async (req, res, next) => {
   const id = req.params.deviceId;
   try {
-    res.send("get device " + id);
-  } catch (error) {}
+    const response = await devicesService.get(id);
+    if (!response.length) {
+      res.status(404).send();
+      return;
+    }
+    res.status(200).send(response);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send();
+  }
 };
 
 const getAllDevice = async (req, res, next) => {
@@ -29,20 +40,56 @@ const getAllDevice = async (req, res, next) => {
     }
     res.status(200).json(response);
   } catch (error) {
-    res.status(500);
+    console.error(error.message);
+    res.status(500).send();
   }
 };
 
-const putDevice = (req, res, next) => {
-  res.send("update full device");
+const putDevice = async (req, res, next) => {
+  try {
+    const { name, brand } = req.body;
+    const id = req.params.deviceId;
+    const response = await devicesService.updateDevice({ id, name, brand });
+    if (response) {
+      res.status(404).send();
+      return;
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send(error);
+  }
 };
 
-const patchDevice = (req, res, next) => {
-  res.send("update partial device");
+const patchDevice = async (req, res, next) => {
+  try {
+    const { name, brand } = req.body;
+    const id = req.params.deviceId;
+    const response = await devicesService.updateDevice({ id, name, brand });
+    if (response) {
+      res.status(404).send();
+      return;
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send();
+  }
 };
 
-const deleteDevice = (req, res, next) => {
-  res.send("update partial device");
+const deleteDevice = async (req, res, next) => {
+  const id = req.params.deviceId;
+  try {
+    const response = await devicesService.deleteDevice(id);
+    if (response) {
+      res.status(404).send();
+      return;
+    }
+    res.status(204).send();
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send();
+  }
 };
 
 module.exports = {

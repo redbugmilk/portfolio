@@ -10,7 +10,6 @@ class File {
   async write(content) {
     try {
       this.block = true;
-      console.log(content);
       await fs.writeJson(this.filePath, content);
     } catch (error) {
       throw new Error("Error writing");
