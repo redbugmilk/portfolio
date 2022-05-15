@@ -1,9 +1,15 @@
-const { query } = require("express");
+const { validationResult } = require("express-validator");
 const devicesService = require("../services/devices");
 const Device = require("../models/devices");
 
 const postDevice = async (req, res, next) => {
   try {
+    const result = validationResult(req);
+    const hasErrors = !result.isEmpty();
+    if (hasErrors) {
+      res.status(400).send();
+      return;
+    }
     const { name, brand } = req.body;
     const newDevice = new Device(name, brand);
     await devicesService.setDevice(newDevice.getDevice());
@@ -15,8 +21,8 @@ const postDevice = async (req, res, next) => {
 };
 
 const getDevice = async (req, res, next) => {
-  const id = req.params.deviceId;
   try {
+    const id = req.params.deviceId;
     const response = await devicesService.get(id);
     if (!response.length) {
       res.status(404).send();
@@ -78,8 +84,8 @@ const patchDevice = async (req, res, next) => {
 };
 
 const deleteDevice = async (req, res, next) => {
-  const id = req.params.deviceId;
   try {
+    const id = req.params.deviceId;
     const response = await devicesService.deleteDevice(id);
     if (response) {
       res.status(404).send();

@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const { body, param } = require("express-validator");
 var {
   postDevice,
   getDevice,
@@ -10,11 +11,22 @@ var {
 } = require("../controllers/devices");
 
 /* GET users listing. */
-router.get("/:deviceId", getDevice);
+router.get("/:deviceId", param("deviceId").not().isEmpty(), getDevice);
 router.get("/", getAllDevice);
-router.post("/", postDevice);
-router.patch("/:deviceId", patchDevice);
-router.put("/:deviceId", putDevice);
-router.delete("/:deviceId", deleteDevice);
+router.post(
+  "/",
+  body("name").not().isEmpty(),
+  body("brand").not().isEmpty(),
+  postDevice
+);
+router.patch("/:deviceId", param("deviceId").not().isEmpty(), patchDevice);
+router.put(
+  "/:deviceId",
+  param("deviceId").not().isEmpty(),
+  body("name").not().isEmpty(),
+  body("brand").not().isEmpty(),
+  putDevice
+);
+router.delete("/:deviceId", param("deviceId").not().isEmpty(), deleteDevice);
 
 module.exports = router;
