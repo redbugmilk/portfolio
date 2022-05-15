@@ -6,11 +6,11 @@ class File {
   constructor(filePath) {
     this.filePath = `${__dirname}/${filePath}`;
     this.block = false;
-    console.log("File");
   }
   async write(content) {
     try {
       this.block = true;
+      console.log(content);
       await fs.writeJson(this.filePath, content);
     } catch (error) {
       throw new Error("Error writing");

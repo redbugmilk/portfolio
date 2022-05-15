@@ -4,13 +4,21 @@ class Devices {
   constructor() {}
 
   async getAll() {
-    try {
-      console.log("getAll");
-      const response = await file.read();
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await file.read();
+    return response;
+  }
+
+  async getAllByBrand(brand) {
+    const response = await file.read();
+    return response.length
+      ? response.filter((item) => item.brand === brand)
+      : [];
+  }
+
+  async setDevice(device) {
+    const allDevices = await this.getAll();
+    allDevices.push(device);
+    file.write(allDevices);
   }
 }
 

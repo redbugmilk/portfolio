@@ -4,16 +4,14 @@ var {
   postDevice,
   getDevice,
   getAllDevice,
-  getByBrandDevice,
   putDevice,
   patchDevice,
   deleteDevice,
 } = require("../controllers/devices");
 
 /* GET users listing. */
-router.get("/", getAllDevice);
 router.get("/:deviceId", getDevice);
-router.get("/?brand=brandId", getByBrandDevice);
+router.get("/", getAllDevice);
 router.post("/", postDevice);
 router.patch("/:deviceId", patchDevice);
 router.put("/:deviceId", putDevice);
