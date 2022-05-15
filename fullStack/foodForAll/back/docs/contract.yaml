@@ -138,9 +138,9 @@ components:
           description: Device's brand
           example: iphone Galaxy 1
         createdAt:
-             type: string
-             format: date
-             description: The date of the device record creation
+          type: string
+          format: date
+          description: The date of the device record creation
     RequestDevices:
       type: object
       properties:
