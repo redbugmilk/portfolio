@@ -1,5 +1,12 @@
 version: '3.8'
 services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: example
   devices:
     build:
       context: ./
@@ -12,3 +19,10 @@ services:
     environment:
       - NODE_ENV=development
       - DEBUG=nodejs-docker-express:*
+      - PGHOST=db
+      - PGUSER=postgres
+      - PGDATABASE=postgres
+      - PGPASSWORD=example
+      - PGPORT=5432
+    depends_on:
+      - db

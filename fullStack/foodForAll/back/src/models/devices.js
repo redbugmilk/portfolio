@@ -1,20 +1,9 @@
-const { v4: uuidv4 } = require("uuid");
-
 class Device {
-  constructor(name, brand) {
+  constructor(id, name, brand, createdAt) {
     this.name = name;
     this.brand = brand;
-    this.id = uuidv4();
-    this.createdAt = new Date();
-  }
-
-  getDevice() {
-    return {
-      name: this.name,
-      brand: this.brand,
-      id: this.id,
-      createdAt: this.createdAt,
-    };
+    this.id = id;
+    this.createdAt = createdAt;
   }
 }
 

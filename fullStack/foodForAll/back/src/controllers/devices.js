@@ -1,6 +1,17 @@
 const { validationResult } = require("express-validator");
-const devicesService = require("../services/devices");
+const devicesService = require("../services/devicesFiles");
+const Devices = require("../services/devicesDatabase");
 const Device = require("../models/devices");
+const { Client } = require("pg");
+
+const client = new Client();
+async function initializeDB() {
+  await client.connect();
+}
+
+initializeDB();
+
+const devicesDatabaseService = new Devices(client);
 
 const postDevice = async (req, res, next) => {
   try {
@@ -12,7 +23,7 @@ const postDevice = async (req, res, next) => {
     }
     const { name, brand } = req.body;
     const newDevice = new Device(name, brand);
-    await devicesService.setDevice(newDevice.getDevice());
+    //await devicesService.setDevice(newDevice.getDevice());
     res.status(200).send("post device");
   } catch (error) {
     console.error(error.message);
@@ -23,11 +34,7 @@ const postDevice = async (req, res, next) => {
 const getDevice = async (req, res, next) => {
   try {
     const id = req.params.deviceId;
-    const response = await devicesService.get(id);
-    if (!response.length) {
-      res.status(404).send();
-      return;
-    }
+    const response = await devicesDatabaseService.get(id);
     res.status(200).send(response);
   } catch (error) {
     console.error(error.message);
