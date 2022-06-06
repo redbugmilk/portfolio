@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1653911784403" clover="3.2.0">
+  <project timestamp="1653911784404" name="All files">
+    <metrics statements="13" coveredstatements="13" conditionals="12" coveredconditionals="12" methods="3" coveredmethods="3" elements="28" coveredelements="28" complexity="0" loc="13" ncloc="13" packages="1" files="1" classes="1"/>
+    <file name="math-operations.js" path="/Users/joana.correia/Documents/personal/github/portfolio/keepOnTesting/math-operations.js">
+      <metrics statements="13" coveredstatements="13" conditionals="12" coveredconditionals="12" methods="3" coveredmethods="3"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="2" type="cond" truecount="4" falsecount="0"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="7" count="1" type="stmt"/>
+      <line num="8" count="2" type="cond" truecount="4" falsecount="0"/>
+      <line num="9" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="13" count="1" type="stmt"/>
+      <line num="14" count="2" type="cond" truecount="4" falsecount="0"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="20" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>
