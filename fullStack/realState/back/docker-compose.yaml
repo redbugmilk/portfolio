@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: example
+  realState:
+    build:
+      context: ./
+      target: dev
+    volumes:
+      - .:/api
+    command: npm run start
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=development
+      - DEBUG=nodejs-docker-express:*
+      - PGHOST=db
+      - PGUSER=visitor
+      - PGDATABASE=realState
+      - PGPASSWORD=example
+      - PGPORT=5432
+    depends_on:
+      - db

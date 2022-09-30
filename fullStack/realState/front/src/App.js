@@ -1,14 +1,18 @@
 import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
+import { CssBaseline } from "@mui/material";
 import { useState } from "react";
 import theme from "./themes/theme";
+import CustomButton from "./components/commons/Button/Button.js";
 
 function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   return (
     <ThemeProvider theme={theme(isDarkTheme)}>
       <CssBaseline />
-      <div className="App"></div>
+      <div className="App">
+        <p>Test</p>
+        <CustomButton label="press this button" />
+      </div>
     </ThemeProvider>
   );
 }

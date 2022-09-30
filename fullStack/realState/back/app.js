@@ -3,6 +3,10 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+
+const YAML = require("yamljs");
+const swaggerDocument = YAML.load("./docs/contract.yaml");
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");

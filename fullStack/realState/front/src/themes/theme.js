@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/CssBaseline";
+import { createTheme } from "@mui/material/styles";
 import { themeOptionsDark, themeOptionsLight } from "./themeOptions";
 
 const theme = (isDark) => {

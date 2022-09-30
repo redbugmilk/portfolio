@@ -1,10 +1,13 @@
-import { muiTheme } from "storybook-addon-material-ui";
-import {
-  themeOptionsDark,
-  themeOptionsLight,
-} from "../src/themes/themeOptions";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../src/themes/theme.js";
 
-export const decorators = [muiTheme([themeOptionsDark, themeOptionsLight])];
+export const decorators = [
+  (Story) => (
+    <ThemeProvider theme={theme(true)}>
+      <Story />
+    </ThemeProvider>
+  ),
+];
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
